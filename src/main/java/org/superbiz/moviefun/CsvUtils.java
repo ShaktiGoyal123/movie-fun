@@ -14,7 +14,12 @@ public class CsvUtils {
 
     public static String readFile(String path) {
         try {
-            Scanner scanner = new Scanner(new File(path)).useDelimiter("\\A");
+
+            Class cls = Class.forName("org.superbiz.moviefun.CsvUtils");
+            ClassLoader cLoader = cls.getClassLoader();
+//            Scanner scanner = new Scanner(new File(path)).useDelimiter("\\A");
+            Scanner scanner;
+            scanner = new Scanner(cLoader.getResourceAsStream(path)).useDelimiter("\\A");
 
             if (scanner.hasNext()) {
                 return scanner.next();
@@ -22,7 +27,7 @@ public class CsvUtils {
                 return "";
             }
 
-        } catch (FileNotFoundException e) {
+        } catch ( ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
